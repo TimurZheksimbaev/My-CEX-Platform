@@ -1,0 +1,196 @@
+/* Body Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  /* Dashboard Container */
+  .dashboard-container {
+    width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  /* Header */
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #74ebd5, #9face6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  /* No Orders Message */
+  .no-orders {
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    font-style: italic;
+  }
+  
+  /* Table */
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 1rem;
+    background-color: #fefefe;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Header */
+  .orders-table th {
+    background-color: #4a69bd;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Table Data */
+  .orders-table td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  /* Row Hover Effect */
+  .orders-table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Alternating Row Colors */
+  .orders-table tr:nth-child(even) {
+    background-color: #f8fbfd;
+  }
+  
+  /* Buy/Sell Type Colors */
+  .buy {
+    color: #27ae60;
+    font-weight: bold;
+    background: #eafaf1;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .sell {
+    color: #c0392b;
+    font-weight: bold;
+    background: #fdecee;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  /* Add Subtle Animation */
+  .orders-table tr {
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .orders-table tr:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Модальное окно */
+  .modal {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+  }
+  
+  .modal h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .modal form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .modal form input,
+  .modal form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .submit-button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  .close-button {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .close-button:hover {
+    background-color: #c82333;
+  }
+
+
+
+
+
+

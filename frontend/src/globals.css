@@ -1,0 +1,88 @@
+/* Global Styles */
+
+/* Body */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  /* Page Container */
+  .page-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  /* Headers */
+  h1, h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #e66465, #9198e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Buttons */
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background: #4a69bd;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background: #3b5998;
+    transform: scale(1.05);
+  }
+  
+  /* Error Messages */
+  .error-message {
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  /* Input Fields */
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  input:focus {
+    border-color: #4a69bd;
+    outline: none;
+  }
+  
+  /* Form */
+  form {
+    margin: 20px 0;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 20px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+  
