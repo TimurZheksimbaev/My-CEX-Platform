@@ -15,6 +15,3 @@ async def register_user(user_data: UserCreate, db: AsyncSession = Depends(get_db
 async def login_user(user_data: UserCreate, db: AsyncSession = Depends(get_db)):
     return await AuthService.login_user(db, user_data)
 
-@router.get('/me', response_model=dict)
-async def me(db: AsyncSession = Depends(get_db), current_user: UserCreate=Depends(AuthService.get_current_user)):
-    return current_user

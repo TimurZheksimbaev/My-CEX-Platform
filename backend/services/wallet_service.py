@@ -135,53 +135,6 @@ class WalletService:
     #             await db.refresh(balance)
     #             return balance
 
-    @staticmethod
-    async def exchange_crypto(
-            db: AsyncSession,
-            wallet_from_id: int,
-            wallet_to_id: int,
-            amount_from: float,
-            amount_to: float,
-            trading_pair: str,
-    ):
-        crypto_from, crypto_to = trading_pair.split("-")
-
-        # Fetch balances for both wallets
-        wallet_from_balances = await db.execute(
-            select(Balance).filter(Balance.wallet_id == wallet_from_id)
-        )
-        wallet_to_balances = await db.execute(
-            select(Balance).filter(Balance.wallet_id == wallet_to_id)
-        )
-
-        balances_from = {b.crypto_symbol: b for b in wallet_from_balances.scalars().all()}
-        balances_to = {b.crypto_symbol: b for b in wallet_to_balances.scalars().all()}
-
-        # Subtract from `crypto_from` balance
-        if crypto_from not in balances_from or balances_from[crypto_from].balance < amount_from:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Insufficient balance for trade")
-        balances_from[crypto_from].balance -= amount_from
-
-        # Add to `crypto_from` balance in the receiving wallet
-        if crypto_from in balances_to:
-            balances_to[crypto_from].balance += amount_from
-        else:
-            db.add(Balance(wallet_id=wallet_to_id, crypto_symbol=crypto_from, balance=amount_from))
-
-        # Subtract from `crypto_to` balance in the receiving wallet
-        if crypto_to in balances_to:
-            balances_to[crypto_to].balance -= amount_to
-        else:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Receiving wallet insufficient funds")
-
-        # Add to `crypto_to` balance in the sending wallet
-        if crypto_to in balances_from:
-            balances_from[crypto_to].balance += amount_to
-        else:
-            db.add(Balance(wallet_id=wallet_from_id, crypto_symbol=crypto_to, balance=amount_to))
-
-        await db.commit()
-
 
     @staticmethod
     async def trade_crypto(
@@ -230,8 +183,8 @@ class WalletService:
         buyer_balance.balance -= total_cost
         seller_balance.balance -= amount    
 
-        await WalletService.add_funds_to_wallet(db, buyer_wallet, base_crypto, amount)
-        await WalletService.add_funds_to_wallet(db, seller_wallet, quote_crypto, total_cost)
+        await WalletService.add_funds_to_wallet(db, buyer_wallet.user_id, base_crypto, amount)
+        await WalletService.add_funds_to_wallet(db, seller_wallet.user_id, quote_crypto, total_cost)
 
         await db.commit()
 

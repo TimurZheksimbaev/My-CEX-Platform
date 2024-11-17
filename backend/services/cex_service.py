@@ -154,6 +154,7 @@ class CEXService:
 
     @staticmethod
     async def execute_order(db: AsyncSession, order_id: int, user: User, amount: float):
+
         # Fetch the order by ID
         order: Order = await OrderRepository.get_order_by_id(db, order_id)
         if not order:
@@ -161,37 +162,49 @@ class CEXService:
         if order.user_id == user.id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You cannot execute your own order")
 
-        # Determine the amount to execute and total cost
+        # Validate the amount
         if amount > order.amount:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Amount exceeds order quantity")
-        total_cost = order.price * amount
-
-        # Fetch wallets for both users
-        order_owner_wallet = await WalletService.get_wallet_by_user_id(db, order.user_id)
-        current_user_wallet = await WalletService.get_wallet_by_user_id(db, user.id)
-        if not order_owner_wallet or not current_user_wallet:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Wallet not found")
-
-        # Perform the trade based on order type
-        if order.type == "buy":
-            await WalletService.exchange_crypto(
-                db, order_owner_wallet.id, current_user_wallet.id, amount, total_cost, order.trading_pair
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Amount {amount} exceeds available order quantity {order.amount}"
             )
-        elif order.type == "sell":
-            await WalletService.exchange_crypto(
-                db, current_user_wallet.id, order_owner_wallet.id, total_cost, amount, order.trading_pair
+
+        # Perform the trade using trade_crypto
+        try:
+            trade_result = await WalletService.trade_crypto(
+                db=db,
+                buyer_id=user.id if order.type == "buy" else order.user_id,
+                seller_id=order.user_id if order.type == "buy" else user.id,
+                trading_pair=order.trading_pair,
+                amount=amount,
+                price=order.price
             )
-        else:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid order type")
+        except HTTPException as e:
+            # Propagate the exception if something goes wrong during the trade
+            raise e
 
         # Update or delete the order based on remaining amount
-        if amount < order.amount:
-            order.amount -= amount
-            await db.commit()
-        else:
-            await OrderRepository.delete_order(db, order_id)
+        try:
+            async with db.begin():
+                if amount < order.amount:
+                    order.amount -= amount
+                    await db.commit()
+                else:
+                    await OrderRepository.delete_order(db, order_id)
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to update or delete the order"
+            )
 
-        return {"message": "Order has been successfully executed!"}
+        # Return the result from the trade_crypto function with additional details
+        return {
+            "message": "Order executed successfully!",
+            **trade_result,
+            "order_id": order_id,
+            "remaining_order_amount": order.amount if amount < order.amount else 0,
+        }
+
 
     @staticmethod
     async def place_order(db: AsyncSession, user_id: int, order_data: OrderCreate):

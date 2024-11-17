@@ -1,3 +1,4 @@
+from models.user import User
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import delete
@@ -34,10 +35,17 @@ class OrderRepository:
     
     @staticmethod
     async def get_orders(db: AsyncSession):
-        query = select(Order).order_by(Order.created_at)
+        # query = select(Order).order_by(Order.created_at)
+        # result = await db.execute(query)
+        # return result.scalars().all()
+        query = (
+            select(Order, User.email)
+            .join(User, Order.user_id == User.id)
+            .order_by(Order.created_at)
+        )
         result = await db.execute(query)
-        return result.scalars().all()
-
+        # Combine Order data and User email into a list of dictionaries
+        return [{"order": order, "email": email} for order, email in result.all()]
 
     @staticmethod
     async def delete_order(db: AsyncSession, order_id: int):

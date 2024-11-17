@@ -21,19 +21,27 @@ async def place_order(
     return await CEXService.place_order(db, current_user.id, order_data)
 
 
-@router.post("/execute/{order_id}", response_model=dict)
+from pydantic import BaseModel
+class ExecuteRequest(BaseModel):
+    order_id: int
+    amount: float
+
+@router.post("/execute/", response_model=dict)
 async def execute_order(
-    order_id: int,
-    amount: float,
+    executeRequest: ExecuteRequest,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(AuthService.get_current_user)
 ):
-    return await CEXService.execute_order(db, order_id, current_user, amount)
+    return await CEXService.execute_order(db, executeRequest.order_id, current_user, executeRequest.amount)
 
 @router.get("/order_book/{symbol}", response_model=list[OrderResponse])
 async def get_order_book(symbol: str, db: AsyncSession = Depends(get_db)):
     return await CEXService.get_order_book(db, symbol)
 
-@router.get("/order_book/", response_model=list[OrderResponse])
+
+class OrderBookResponse(BaseModel):
+    order: OrderResponse
+    email: str
+@router.get("/order_book/", response_model=list[OrderBookResponse])
 async def get_order_book(db: AsyncSession = Depends(get_db)):
     return await CEXService.get_orders(db)
