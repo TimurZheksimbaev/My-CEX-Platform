@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from routers import user_router, cex_router, wallet_router
-from database.connect import engine, Base
+from .routers import user_router, cex_router, wallet_router
+from .database.connect import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
-from tasks import update_prices_task
+from .tasks import update_prices_task
 
 
 app = FastAPI()

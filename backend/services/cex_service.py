@@ -3,13 +3,13 @@ import os
 import httpx
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from repostories.order_repository import OrderRepository
-from schemas.cex import OrderCreate, PriceResponse
-from services.wallet_service import WalletService
+from ..repostories.order_repository import OrderRepository
+from ..schemas.cex import OrderCreate, PriceResponse
+from ..services.wallet_service import WalletService
 from sqlalchemy import select, update
 from datetime import datetime
-from models.order import Order
-from models.user import User
+from ..models.order import Order
+from ..models.user import User
 from dotenv import load_dotenv
 load_dotenv(".env")
 

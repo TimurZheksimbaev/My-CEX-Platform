@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from schemas.cex import OrderCreate, OrderResponse, PriceResponse
-from services.cex_service import CEXService
-from database.connect import get_db
-from services.user_service import AuthService
-from models.user import User
+from ..schemas.cex import OrderCreate, OrderResponse, PriceResponse
+from ..services.cex_service import CEXService
+from ..database.connect import get_db
+from ..services.user_service import AuthService
+from ..models.user import User
 
 router = APIRouter()
 

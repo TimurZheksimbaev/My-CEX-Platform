@@ -2,12 +2,12 @@ import os
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
-from database.connect import get_db
-from models.user import User
+from ..database.connect import get_db
+from ..models.user import User
 from fastapi import HTTPException, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from repostories.user_repository import UserRepository
-from schemas.user import UserCreate, Token
+from ..repostories.user_repository import UserRepository
+from ..schemas.user import UserCreate, Token
 from dotenv import load_dotenv
 
 load_dotenv(".env")
