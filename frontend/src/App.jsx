@@ -4,6 +4,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import "./globals.css"
+import Logout from './pages/Logout';
+
 const App = () => {
   return (
     <Router>
@@ -11,6 +13,7 @@ const App = () => {
         {/* Public Routes */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
         
         {/* Private (Protected) Routes */}
         <Route

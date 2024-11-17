@@ -59,10 +59,13 @@ const Dashboard = () => {
     }
 
     try {
-      await axiosInstance.post(`/order/execute/${selectedOrder.id}`, {
+      console.log(selectedOrder.order.id)
+      console.log(executeAmount)
+      await axiosInstance.post('/order/execute/', {
+        order_id: selectedOrder.order.id,
         amount: parseFloat(executeAmount),
       });
-      setSuccessMessage(`Order ${selectedOrder.id} executed successfully!`);
+      setSuccessMessage(`Order ${selectedOrder.order.id} executed successfully!`);
       setSelectedOrder(null); // Close execution modal
       fetchOrders(); // Refresh orders list
     } catch (err) {
@@ -82,7 +85,6 @@ const Dashboard = () => {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
-
   return ( 
     <>
       <header>
@@ -106,6 +108,7 @@ const Dashboard = () => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>User</th>
               <th>Type</th>
               <th>Trading Pair</th>
               <th>Price</th>
@@ -123,12 +126,13 @@ const Dashboard = () => {
                   setError(''); // Clear any previous errors
                 }}
               >
-                <td>{order.id}</td>
-                <td className={order.type === 'sell' ? 'sell' : 'buy'}>{order.type}</td>
-                <td>{order.trading_pair}</td>
-                <td>{order.price ? order.price : '-'}</td>
-                <td>{order.amount}</td>
-                <td>{new Date(order.created_at).toLocaleString()}</td>
+                <td>{order.order.id}</td>
+                <td>{order.email}</td>
+                <td className={order.order.type === 'sell' ? 'sell' : 'buy'}>{order.order.type}</td>
+                <td>{order.order.trading_pair}</td>
+                <td>{order.order.price ? order.order.price : '-'}</td>
+                <td>{order.order.amount}</td>
+                <td>{new Date(order.order.created_at).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
@@ -197,19 +201,19 @@ const Dashboard = () => {
           <div className="modal">
             <h2>Execute Order</h2>
             <p>
-              <strong>Order ID:</strong> {selectedOrder.id}
+              <strong>Order ID:</strong> {selectedOrder.order.id}
             </p>
             <p>
-              <strong>Type:</strong> {selectedOrder.type}
+              <strong>Type:</strong> {selectedOrder.order.type}
             </p>
             <p>
-              <strong>Trading Pair:</strong> {selectedOrder.trading_pair}
+              <strong>Trading Pair:</strong> {selectedOrder.order.trading_pair}
             </p>
             <p>
-              <strong>Price:</strong> {selectedOrder.price ? selectedOrder.price : '-'}
+              <strong>Price:</strong> {selectedOrder.order.price ? selectedOrder.order.price : '-'}
             </p>
             <p>
-              <strong>Available Amount:</strong> {selectedOrder.amount}
+              <strong>Available Amount:</strong> {selectedOrder.order.amount}
             </p>
             <input
               type="number"
