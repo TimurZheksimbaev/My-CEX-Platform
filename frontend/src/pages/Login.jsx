@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../styles/auth.css"
 
-const API_BASE_URL = "http://localhost:8000/auth";
+const API_BASE_URL = "https://my-cex-platform.onrender.com";
 
 
 const Login = () => {
@@ -11,9 +11,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  
 
   const handleLogin = async (e) => {
+    console.log(process.env.API_BASE_URL)
     e.preventDefault();
     try {
       const response = await axios.post(`${API_BASE_URL}/login`, { email, password });

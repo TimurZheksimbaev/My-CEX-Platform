@@ -2,7 +2,7 @@ import axios from 'axios';
 import { isTokenValid } from './checkToken';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: import.meta.env.API_URL,
 });
 
 // Add Authorization header with JWT token
