@@ -10,7 +10,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",  # Vite development server
-    "http://127.0.0.1:5173"
+    "https://my-cex-platform-frontend.onrender.com"
 ]
 
 app.add_middleware(
