@@ -81,7 +81,7 @@ const Dashboard = () => {
     fetchOrders(); // Fetch data initially
     const interval = setInterval(() => {
       fetchOrders();
-    }, 3000);
+    }, 1000);
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);

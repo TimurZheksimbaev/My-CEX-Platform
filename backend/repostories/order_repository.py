@@ -1,9 +1,9 @@
-from ..models.user import User
+from models.user import User
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import delete
-from ..models.order import Order
-from ..schemas.cex import OrderCreate
+from models.order import Order
+from schemas.cex import OrderCreate
 from datetime import datetime
 
 class OrderRepository:
@@ -54,3 +54,5 @@ class OrderRepository:
         await db.execute(delete(Order).where(Order.id == order_id))
         await db.commit()
         return order
+    
+    

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from ..services.wallet_service import WalletService
-from ..database.connect import get_db
-from ..schemas.wallet import WalletResponse, TransferRequest, WithdrawRequest, BalanceResponse
-from ..models.user import User
-from ..services.user_service import AuthService
+from services.wallet_service import WalletService
+from database.connect import get_db
+from schemas.wallet import WalletResponse, TransferRequest, WithdrawRequest, BalanceResponse
+from models.user import User
+from services.user_service import AuthService
 router = APIRouter()
 
 

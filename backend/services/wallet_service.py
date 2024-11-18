@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from ..models.wallet import Wallet, WalletType, Balance
+from models.wallet import Wallet, WalletType, Balance
 from fastapi import HTTPException, status, Depends
-from ..models.user import User
+from models.user import User
 
 class WalletService:
 

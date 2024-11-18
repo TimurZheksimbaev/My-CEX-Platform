@@ -3,13 +3,13 @@ import os
 import httpx
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from ..repostories.order_repository import OrderRepository
-from ..schemas.cex import OrderCreate, PriceResponse
-from ..services.wallet_service import WalletService
+from repostories.order_repository import OrderRepository
+from schemas.cex import OrderCreate, PriceResponse
+from services.wallet_service import WalletService
 from sqlalchemy import select, update
 from datetime import datetime
-from ..models.order import Order
-from ..models.user import User
+from models.order import Order
+from models.user import User
 from dotenv import load_dotenv
 load_dotenv(".env")
 
@@ -171,10 +171,19 @@ class CEXService:
 
         # Perform the trade using trade_crypto
         try:
+            buyer_id = 0
+            seller_id = 0
+            if order.type == 'buy':
+                buyer_id = order.user_id
+                seller_id = user.id
+            if order.type == 'sell':
+                buyer_id = user.id
+                seller_id = order.user_id
+
             trade_result = await WalletService.trade_crypto(
                 db=db,
-                buyer_id=user.id if order.type == "buy" else order.user_id,
-                seller_id=order.user_id if order.type == "buy" else user.id,
+                buyer_id=buyer_id,
+                seller_id=seller_id,
                 trading_pair=order.trading_pair,
                 amount=amount,
                 price=order.price

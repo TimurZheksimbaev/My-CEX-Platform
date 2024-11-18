@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Enum
 from datetime import datetime
-from ..database.connect import Base
+from database.connect import Base
 import enum
 
 class OrderType(enum.Enum):
