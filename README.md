@@ -9,6 +9,8 @@ npm run dev
 ```
 
 ### Backend
+#### Firstly create `.env` file with DATABASE_URL and SECRET_KEY variables, you can see .env.example in `backend` folder
+
 ```bash
 cd backend
 pip install -r requirements.txt
